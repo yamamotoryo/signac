@@ -921,7 +921,8 @@ SingleCoveragePlot <- function(
   sep = c("-", "-"),
   heights = NULL,
   max.downsample = 3000,
-  downsample.rate = 0.1
+  downsample.rate = 0.1,
+  colours = NULL
 ) {
   valid.assay.scale <- c("common", "separate")
   if (!(assay.scale %in% valid.assay.scale)) {
@@ -1013,6 +1014,11 @@ SingleCoveragePlot <- function(
     downsample.rate = downsample.rate,
     max.downsample = max.downsample
   )
+  
+  if (!is.null(colours)){
+    p <- p + scale_fill_manual(values = colours)
+  }
+  
   # create bigwig tracks
   if (!is.null(x = bigwig)) {
     if (!inherits(x = bigwig, what = "list")) {
@@ -1052,6 +1058,9 @@ SingleCoveragePlot <- function(
       group.by = group.by,
       slot = expression.slot
     )
+    if (!is.null(colours)){
+      ex.plot <- ex.plot + scale_fill_manual(values = colours)
+    }    
     widths <- c(10, length(x = features))
   } else {
     ex.plot <- NULL
@@ -1540,6 +1549,7 @@ CoveragePlot <- function(
   sep = c("-", "-"),
   max.downsample = 3000,
   downsample.rate = 0.1,
+  colours = NULL,
   ...
 ) {
   if (length(x = region) == 1) {
@@ -1584,7 +1594,8 @@ CoveragePlot <- function(
         sep = sep,
         heights = heights,
         max.downsample = max.downsample,
-        downsample.rate = downsample.rate
+        downsample.rate = downsample.rate,
+        colours = colours
       )
     }
   )
